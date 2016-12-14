@@ -1,0 +1,39 @@
+version: '1'
+services:
+	db:
+	  image: mysql:5.7
+	  environment:
+	    MYSQL_ROOT_PASSWORD: secret
+	    MYSQL_DATABASE: fedora4
+	    MYSQL_USER: fedoraAdmin
+	    MYSQL_PASSWORD: secret
+	  volumes:
+	   	- mysql_data:/var/lib/mysql
+	  networks:
+	   	- appnet
+	fedora:
+		image: fedora_karaf
+		volumes:
+			- fedora_data:/mnt/ingest
+		networks:
+	        - appnet
+	triplestore:
+		image: fuseki
+		networks:
+	      	- appnet
+	search:
+		image: solr
+		networks:
+	      	- appnet
+networks:
+	appnet:
+		driver: "bridge"
+volumes:
+	mysql_data:
+		driver: "local"
+	fedora_data:
+		driver: "local"
+		
+		 
+		
+		
