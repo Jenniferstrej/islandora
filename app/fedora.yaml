@@ -1,0 +1,46 @@
+version: '1'
+services:
+        db:
+                image: mysql
+                environment:
+                        MYSQL_ROOT_PASSWORD: secret
+                        MYSQL_DATABASE: fedora3
+                        MYSQL_USER: fedoraAdmin
+                        MYSQL_PASSWORD: secret
+                volumes:
+                        - mysql_data:/mnt/mysql
+        search: 
+                image: solr
+                volumes:
+                        - search_data:/mnt/solr
+                expose:
+                        - 8080
+        triplestore:
+                image: fuseki
+                volumes:
+                        - triplestore_data:/mnt/fuseki
+                expose:
+                        - 8080
+        fedora:
+                depends_on:
+                        - db
+                        - search
+                        - triplestore
+                image: fedora3_karaf
+                volumes:
+                        - fedora_data:/mnt/ingest
+                expose:
+                        - 8080
+                links:
+                        - db
+                        - search
+                        - triplestore
+volumes:
+        mysql_data:
+                driver: "local"
+        fedora_data:
+                driver: "local"
+        search_data:
+                driver: "local"
+        triplestore_data:
+                driver: "local"
