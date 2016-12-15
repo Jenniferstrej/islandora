@@ -36,12 +36,10 @@ COPY scripts/install_fedora.sh /root/
 COPY config/fcrepo3/install.properties /root/fcrepo3/
 RUN /root/install_fedora.sh
 
-#COPY config/fcrepo3/logging.properties /root/fcrepo3/
-#RUN mkdir -p "$CATALINA_HOME/webapps/fedora/WEB-INF/classes"
-#RUN cp /root/fcrepo3/logging.properties "$CATALINA_HOME/webapps/fedora/WEB-INF/classes/."
+COPY config/fcrepo3/logging.properties /root/fcrepo3/
 
 COPY scripts/runall.sh /root/
+COPY scripts/loop.sh /root/
 
 EXPOSE 8080
-EXPOSE 9080
 

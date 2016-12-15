@@ -4,7 +4,7 @@ MAINTAINER Jen and Adam “jennifer.strejevitch@digirati.co.uk”
 
 # Install Fuseki
 ENV FUSEKI_VERSION 2.3.1
-ENV FUSEKI_BASE /usr/local/fuseki
+ENV FUSEKI_BASE /mnt/fuseki
 ENV FUSEKI_DEPLOY /usr/local/tomcat7/webapps
 
 RUN cd && mkdir -p "$FUSEKI_BASE" \ 
@@ -21,5 +21,5 @@ RUN cd && mkdir -p "$FUSEKI_BASE" \
 COPY config/shiro.ini /root/
 COPY config/test.ttl /root/
 
-RUN cp /root/shiro.ini  /usr/local/fuseki/. \
-	&& cp /root/test.ttl  /usr/local/fuseki/configuration/.
+RUN cp /root/shiro.ini  "$FUSEKI_BASE"/. \
+	&& cp /root/test.ttl  "$FUSEKI_BASE"/configuration/.

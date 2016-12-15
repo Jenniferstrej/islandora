@@ -4,7 +4,7 @@ MAINTAINER Jen and Adam “jennifer.strejevitch@digirati.co.uk”
 
 # Install Solr
 ENV SOLR_VERSION 4.10.3
-ENV SOLR_HOME /usr/local/tomcat7/solr
+ENV SOLR_HOME /mnt/solr
 
 RUN cd /tmp \
 	&& curl -fSL http://archive.apache.org/dist/lucene/solr/$SOLR_VERSION/solr-$SOLR_VERSION.tgz -o solr-$SOLR_VERSION.tgz \

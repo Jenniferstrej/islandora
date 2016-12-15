@@ -3,9 +3,23 @@
 cd $CATALINA_HOME
 catalina.sh run &
 
-echo waiting for tomcat to start up for the first time
+echo waiting for tomcat to start up
 sleep 45
 
+cd $CATALINA_HOME
+echo stopping tomcat...
+catalina.sh stop
+
+echo adding logging
+cp /root/fcrepo3/logging.properties "$CATALINA_HOME/webapps/fedora/WEB-INF/classes/."
+
+cd $CATALINA_HOME
+catalina.sh run &
+
+echo waiting for tomcat to start up
+sleep 45
+
+echo starting karaf
 /opt/karaf/bin/start
 
 echo sleeping for 5 seconds

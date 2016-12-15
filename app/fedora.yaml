@@ -1,4 +1,4 @@
-version: '1'
+version: '2'
 services:
         db:
                 image: mysql
@@ -8,19 +8,17 @@ services:
                         MYSQL_USER: fedoraAdmin
                         MYSQL_PASSWORD: secret
                 volumes:
-                        - mysql_data:/mnt/mysql
+                        - mysql_data:/var/lib/mysql
         search: 
                 image: solr
                 volumes:
                         - search_data:/mnt/solr
-                expose:
-                        - 8080
+                command: /catalina-run.sh
         triplestore:
                 image: fuseki
                 volumes:
                         - triplestore_data:/mnt/fuseki
-                expose:
-                        - 8080
+                command: /catalina-run.sh
         fedora:
                 depends_on:
                         - db
@@ -29,12 +27,13 @@ services:
                 image: fedora3_karaf
                 volumes:
                         - fedora_data:/mnt/ingest
-                expose:
-                        - 8080
+                ports:
+                        - "80:8080"
                 links:
                         - db
                         - search
                         - triplestore
+                command: /root/runall.sh
 volumes:
         mysql_data:
                 driver: "local"

@@ -43,6 +43,8 @@ RUN mkdir -p "$CATALINA_HOME" \
 	&& rm bin/*.bat \
 	&& rm tomcat.tar.gz* \
 	&& useradd -ms /bin/bash tomcat7 \
-	&& sed -i '$i<role rolename="fedoraUser"/>$i<role rolename="fedoraAdmin"/>$i<role rolename="manager-gui"/>$i<user username="testuser" password="password1" roles="fedoraUser"/>$i<user username="adminuser" password="password2" roles="fedoraUser"/>$i<user username="fedoraAdmin" password="secret3" roles="fedoraAdmin"/>$i<user username="fedora4" password="fedora4" roles="manager-gui"/>' /usr/local/tomcat7/conf/tomcat-users.xml
+	&& sed -i '$i<role rolename="manager-gui"/><user username="tomcat" password="secret" roles="manager-gui"/>' /usr/local/tomcat7/conf/tomcat-users.xml
 
 COPY scripts/catalina-run.sh .
+
+EXPOSE 8080
